@@ -7,6 +7,7 @@ yarn-error.log*
 yarn.lock*
 package-lock.json
 Cargo.lock
+.DS_Store
 
 # Runtime data
 pids

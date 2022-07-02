@@ -1,42 +1,48 @@
 import { ethers } from "ethers";
 
-const tomb = document.querySelector('.tomb')
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const app = document.body
 
-const newWallet = async () => {
-    // let password = prompt("Password");
-    let password = "everydayweburntotheground"
+const run = async () => {
+    let password = "justforme"
 
     if (password) {
       var randomSeed = ethers.Wallet.createRandom();
-
       console.log(randomSeed)
 
-      const d = new Date()
-      const day = d.getDate()
-      const month = d.getMonth()
-      const year = d.getFullYear()
+      const words = randomSeed.mnemonic.phrase.split(" ")
+      let phrase = "";
 
-      tomb.innerHTML += `<div>${randomSeed.address}</div>`
-      tomb.innerHTML += `<div>${randomSeed.mnemonic.phrase}</div>`
-      tomb.innerHTML += `<div>${day} ${months[month]} ${year}</div>`
+      for (let i = 0; i < words.length; i++) {
+        if ((i+1) % 4 === 0) {
+          phrase += `${words[i]}\n`
+        } else {
+          phrase += `${words[i]} `
+        }
+      }
 
-      // const birth = new Date().getTime()
-      //
-      // function callback(progress) {
-      //   console.log("Encrypting: " + parseInt(progress * 100) + "% complete");
-      // }
-      //
-      // let encryptPromise = randomSeed.encrypt(password, callback);
-      //
-      // encryptPromise.then(function (json) {
-      //   // console.log(json);
-      //   tomb.innerHTML += `<div>${randomSeed.address}</div>`
-      //   tomb.innerHTML += `<div>${randomSeed.mnemonic.phrase}</div>`
-      //   tomb.innerHTML += `<div>${birth}–${new Date().getTime()}</div>`
-      //   tomb.classList.add('ready')
-      // });
+      const div = document.createElement('div')
+      div.innerText = phrase
+      app.appendChild(div)
+      app.style.background = col(randomSeed.address)
+      app.style.color = col(randomSeed.address)
     }
   };
 
-newWallet()
+run()
+
+function algo(str){
+  var hash = 5381;
+  for (var i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+  }
+  return hash;
+}
+
+function col(str) {
+  var hash = algo(str);
+  var r = (hash & 0xFF0000) >> 16;
+  var g = (hash & 0x00FF00) >> 8;
+  var b = hash & 0x0000FF;
+
+  return `rgb(${r},${g},${b})`
+}

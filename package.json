@@ -1,11 +1,11 @@
 {
-  "name": "memorywallet",
+  "name": "for-your-eyes-only",
   "version": "1.0.0",
   "description": "",
   "source": "index.html",
   "scripts": {
     "dev": "parcel",
-    "build": "parcel build",
+    "build": "parcel build ./index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
