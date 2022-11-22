@@ -1,8 +1,13 @@
 import { ethers } from "ethers";
 
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop)
+})
 const app = document.body
 
 const run = async () => {
+    if (params.mono) document.documentElement.style.filter = "grayscale(1)"
+
     let password = "justforme"
 
     if (password) {
